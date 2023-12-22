@@ -1,0 +1,17 @@
+.btnProf,
+.btnEtudiant {
+    background-color: #fff;
+    color: #D9B;
+    font-weight: bold;
+    text-align: center;
+}
+
+.fond-btn {
+    background-color: #D9B;
+    color: #fff !important;
+}
+
+.headercontainer {
+    background-color: #D9B;
+    color: white;
+}

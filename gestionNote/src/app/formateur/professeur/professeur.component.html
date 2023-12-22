@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg headercontainer">
+    <div class="container px-5">
+        <a class="navbar-brand text-light" href="#">
+            <img src="../../../../assets/logo.png" alt="" style="width: 140px;">
+        </a>
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img class="img-fluid" style="width: 4Opx; height: 40px; border-radius: 50%;"
+                    [src]="" alt="">
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item text-dark" href="#">Profil</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item text-dark" href="#">Se déconnecter</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="row m-2 p-1">
+    <div class="col-12 col-md-6">
+        <div class="shadow">
+            <button class="btn  btnProf w-100" [ngClass]="{'fond-btn': boutonActif === 1}"
+                (click)="showComponant('gestionEvaluation')" (click)="boutonActif = 1">Gestion Evaluations
+            </button>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class=" shadow">
+            <button class="btn  btnEtudiant w-100" [ngClass]="{'fond-btn': boutonActif === 2}"
+                (click)="showComponant('gestionNote')" (click)="boutonActif = 2">Gestion Notes
+            </button>
+        </div>
+    </div>
+</div>
+
+<app-gestion-evaluation class="gestionEvaluation" id="gestionEvaluation" *ngIf="currentContent === 'gestionEvaluation'" ></app-gestion-evaluation>
+<app-gestion-note class="gestionNote" id="gestionNote" *ngIf="currentContent === 'gestionNote'"></app-gestion-note>
+
+<app-footer-admin></app-footer-admin>
+

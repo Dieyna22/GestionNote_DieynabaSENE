@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg headercontainer">
+    <div class="container px-5">
+        <a class="navbar-brand text-light" href="#">
+            <img src="../../../../assets/logo.png" alt="" style="width: 140px;">
+        </a>
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img class="img-fluid" style="width: 4Opx; height: 40px; border-radius: 50%;"
+                    [src]="ApprenantConnect.imageApprenant"
+                    alt="">
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item text-dark" href="#">Profil</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item text-dark" href="#">Se déconnecter</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="row m-2 p-1">
+    <div class="col-12 col-md-6">
+        <div class="shadow">
+            <button class="btn  btnProf w-100" (click)="Afficher()" [ngClass]="{'fond-btn': boutonActif === 1}" (click)="boutonActif = 1"
+                >Semestre1
+            </button>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class=" shadow">
+            <button class="btn  btnEtudiant w-100" (click)="Afficher()" [ngClass]="{'fond-btn': boutonActif === 2}"  (click)="boutonActif = 2"
+                >Semestre2
+            </button>
+        </div>
+    </div>
+    
+   
+</div>
+
+<h3 class="user ms-5 text-center">{{ApprenantConnect.prenomApprenant}} {{ApprenantConnect.nomApprenant}}</h3>
+
+<div class="table-responsive overflow-y-scroll mt-2" style="height: 55vh;" [class]="tabNotes" *ngIf="showDevoir==showSemestre">
+    <table class="table align-items-center  p-2">
+        <thead class="sticky-top fond-bleu">
+            <tr class="">
+                <th scope="col" class="fond-bleu text-white">Evaluation</th>
+                <th scope="col" class="fond-bleu text-white">Note</th>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let note of tabNotes " class="">
+                <tr *ngIf="note.apprenants==ApprenantConnect.prenomApprenant && note.semester==1" >
+                    <td>
+                        {{note.type}}
+                    </td>
+                    <td>
+                        {{ note.notes}}
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive overflow-y-scroll mt-2" style="height: 55vh;" *ngIf="!showDevoir">
+    <table class="table align-items-center  p-2">
+        <thead class="sticky-top fond-bleu">
+            <tr class="">
+                <th scope="col" class="fond-bleu text-white">Matieres</th>
+                <th scope="col" class="fond-bleu text-white">Devoir</th>
+                <th scope="col" class="fond-bleu text-white">Examen</th>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let note of tabNotes " class="">
+                <tr *ngIf="note.apprenants==ApprenantConnect.prenomApprenant && note.semester==2">
+                    <td>
+                        {{note.type}}
+                    </td>
+                    <td>
+                        {{ note.notes}}
+                    </td>
+                    <td>
+            
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+<app-footer-admin></app-footer-admin>
