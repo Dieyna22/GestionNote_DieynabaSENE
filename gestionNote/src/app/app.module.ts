@@ -16,6 +16,7 @@ import { ProfesseurComponent } from './formateur/professeur/professeur.component
 import { GestionEvaluationComponent } from './formateur/gestion-evaluation/gestion-evaluation.component';
 import { GestionNoteComponent } from './formateur/gestion-note/gestion-note.component';
 import { EtudiantComponent } from './etudiant/etudiant/etudiant.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 @NgModule({
 
@@ -33,6 +34,7 @@ import { EtudiantComponent } from './etudiant/etudiant/etudiant.component';
     GestionEvaluationComponent,
     GestionNoteComponent,
     EtudiantComponent,
+    MaintenanceComponent,
   ],
   imports: [
     BrowserModule,
