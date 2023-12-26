@@ -7,4 +7,5 @@ export class Notes {
     evaluation: string = '';
     Classe: string = '';
     apprenants: string = '';
+    etat: number = 0;
 }

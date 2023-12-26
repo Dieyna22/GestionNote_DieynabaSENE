@@ -14,16 +14,19 @@
                 </tr>
             </thead>
             <tbody>
-                    <tr *ngFor="let evaluation of tabEvaluationFormateur">
-                        <td>{{evaluation.semester}}</td>
-                        <td>{{evaluation.date}} </td>
-                        <td>{{evaluation.type}} </td>
-                        <td>{{evaluation.status}} </td>
-                        <td>{{evaluation.subject}} </td>
+                    <tr *ngFor="let evaluation of tabEvaluationFormateur; let i = index">
+                        <ng-container *ngIf="evaluation.etat==1" >
+                            <td>{{evaluation.semester}}</td>
+                            <td>{{evaluation.date}} </td>
+                            <td>{{evaluation.type}} </td>
+                            <td>{{evaluation.status}} </td>
+                            <td>{{evaluation.subject}} </td>
+                       
                         <td>
-                            <button class="btn btn-outline-danger me-2">❌</button>
-                            <button class="btn btn-outline-danger">✏</button>
+                            <button class="btn btn-outline-danger me-2" (click)="deleteEvaluation(i)">❌</button>
+                            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modification" (click)="chargerInfosEvaluation(evaluation)"  [ngClass]="{'modif': evaluation.status === 'faite'}">✏</button>
                         </td>
+                        </ng-container>
                     </tr>
             </tbody>
         </table>
@@ -83,8 +86,6 @@
                             [(ngModel)]="status">
                             <option selected>Choisisez un type</option>
                             <option value="en_cours">En cours</option>
-                            <option value="reportee">Reportée</option>
-                            <option value="faite">Faite</option>
                         </select>
                         <!-- <input type="text" id="status" name="status" class="form-control" [(ngModel)]="evaluationFormModel.status" required> -->
                     </div>
@@ -102,6 +103,83 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn save" data-bs-dismiss="modal" (click)=" ajoutEvaluationsValider()" >Ajout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Modification Evaluation -->
+<div class="modal fade" id="modification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fw-bold titre">Modifier une evaluation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulaire d'enregistrement -->
+                <form>
+                    <div class="mb-3">
+                        <label for="classe" class="form-label">classe</label><br>
+                        <select class="form-select" name="classe" aria-label="Default select example"
+                            [(ngModel)]="classe">
+                            <option selected>{{formateurConnect.classeF}}</option>
+                        </select>
+                        <!-- <input type="text" id="semester" name="semester" class="form-control" [(ngModel)]="evaluationFormModel.semester" required> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <select class="form-select" aria-label="Default select example" name="semester"
+                            [(ngModel)]="semester">
+                            <option selected>Choisisez un Semestre</option>
+                            <option value="1">Semestre 1</option>
+                            <option value="2">Semestre 2</option>
+                        </select>
+                        <!-- <input type="text" id="semester" name="semester" class="form-control" [(ngModel)]="evaluationFormModel.semester" required> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" id="date" name="date" class="form-control" [(ngModel)]="date">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <select class="form-select" aria-label="Default select example" name="type" [(ngModel)]="type">
+                            <option selected>Choisisez un type</option>
+                            <option value="devoir">Devoir</option>
+                            <option value="examen">Examen</option>
+                        </select>
+                        <!-- <input type="text" id="type" name="type" class="form-control" [(ngModel)]="evaluationFormModel.type" required> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" aria-label="Default select example" name="status"
+                            [(ngModel)]="status">
+                            <option selected>Choisisez un type</option>
+                            <option value="en_cours">En cours</option>
+                            <option value="reportee">Reportée</option>
+                            <option value="faite">Faite</option>
+                        </select>
+                        <!-- <input type="text" id="status" name="status" class="form-control" [(ngModel)]="evaluationFormModel.status" required> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <select class="form-select" name="subject" aria-label="Default select example"
+                            [(ngModel)]="subject">
+                            <option selected>{{formateurConnect.matiereF}}</option>
+                        </select>
+                        <!-- <input type="text" id="subject" name="subject" class="form-control" [(ngModel)]="evaluationFormModel.subject" required> -->
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn save" data-bs-dismiss="modal"
+                    (click)=" modierEvaluation() ">Modifier</button>
             </div>
         </div>
     </div>

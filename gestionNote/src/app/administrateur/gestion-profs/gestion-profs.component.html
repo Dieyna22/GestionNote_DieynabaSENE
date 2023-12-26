@@ -159,10 +159,10 @@
                             <li>{{currentFormateur?.matiereF}}</li>
                         </ul>
                     </div>
-                    <div class="col-12 col-md-4" *ngFor="let ev of currentFormateur?.evaluation ">
+                    <div class="col-12 col-md-4" >
                         <span class="titleForm titre fw-bold fs-5">Evaluations</span>
                         <ul class="overflow-y-scroll" style="height: 10vh;">
-                            <li><a href="#">{{ev.type}} {{ev.subject}}</a></li>
+                            <li *ngFor="let ev of currentFormateur?.evaluation"><a href="#">{{ev.type}} {{ev.subject}}</a></li>
                         </ul>
                     </div>
                 </div>

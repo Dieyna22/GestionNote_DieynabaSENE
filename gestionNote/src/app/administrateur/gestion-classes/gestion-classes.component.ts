@@ -52,7 +52,7 @@ export class GestionClassesComponent {
 
   // Methode pour valider l'ajout de classes
   ajoutClassesValider() {
-    alert(this.nomClasse);
+    // alert(this.nomClasse);
 
     // On vérifie si le tableau n'est pas vide 
     if (this.tabClasses.length) {

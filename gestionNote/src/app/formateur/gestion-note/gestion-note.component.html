@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let eleve of tabNotes">
+                <tr *ngFor="let eleve of formateurConnect.note">
                     <td>{{eleve.semester}}</td>
                     <td>{{eleve.Classe}} </td>
                     <td>{{eleve.date }} </td>
@@ -24,8 +24,7 @@
                     <td>{{eleve.apprenants}} </td>
                     <td>{{eleve.notes}} </td>
                     <td>
-                        <button class="btn btn-outline-danger me-2">❌</button>
-                        <button class="btn btn-outline-danger">✏</button>
+                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modification" (click)="chargerInfosNote(eleve)" >✏</button>
                     </td>
                 </tr>
             </tbody>
@@ -33,7 +32,7 @@
     </div>
 </div>
 
-<!-- Modal Ajout Evaluation -->
+<!-- Modal Ajout Note -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -53,21 +52,26 @@
                         <!-- <input type="text" id="semester" name="semester" class="form-control" [(ngModel)]="evaluationFormModel.semester" required> -->
                     </div>
 
-                    <div class="mb-3" *ngFor=" let semestre of formateurConnect.evaluation">
+                    <ng-container  >
+                    <div class="mb-3">
                         <label for="semester" class="form-label">Semester</label>
                         <select class="form-select" aria-label="Default select example" name="semester"
                             [(ngModel)]="semester">
                             <option selected>Choisisez un Semestre</option>
-                            <option value="{{semestre.semester}}">Semestre {{semestre.semester}} </option>
+                            <ng-container *ngFor=" let semestre of formateurConnect.evaluation">
+                                 <option value="{{semestre.semester}}">Semestre {{semestre.semester}} </option>
+                            </ng-container>
                         </select>
                         <!-- <input type="text" id="semester" name="semester" class="form-control" [(ngModel)]="evaluationFormModel.semester" required> -->
                     </div>
 
-                    <div class="mb-3" *ngFor=" let semestre of formateurConnect.evaluation">
+                    <div class="mb-3">
                         <label for="date" class="form-label" >Année Scolaire</label >
                             <select class="form-select" aria-label="Default select example" name="date" [(ngModel)]="date">
                                 <option selected>Année Scolaire</option>
+                                <ng-container *ngFor=" let semestre of formateurConnect.evaluation">
                                 <option value="{{semestre.date | date:'YYYY'}}"> {{semestre.date| date:'YYYY'}}</option>
+                                </ng-container>
                             </select>
                         <!-- <input type="text" id="semester" name="date" class="form-control" [(ngModel)]="date" value="{{semestre.date}}"> -->
                         <!-- <input type="date" id="date" name="date" class="form-control" [(ngModel)]="date"> -->
@@ -78,11 +82,14 @@
                         <select class="form-select" aria-label="Default select example" name="type"  [(ngModel)]="type">
                             <option selected>Choisisez une evaluation</option>
                             <ng-container *ngFor=" let semestre of formateurConnect.evaluation">
-                            <option value="{{semestre.type}} {{semestre.subject}}">{{semestre.type}} {{semestre.subject}}</option>
+                                <ng-container *ngIf="semestre.status == 'faite'">
+                                <option value="{{semestre.type}} {{semestre.subject}}">{{semestre.type}} {{semestre.subject}}</option>
+                                </ng-container>
                             </ng-container>
                         </select>
                         <!-- <input type="text" id="type" name="type" class="form-control" [(ngModel)]="evaluationFormModel.type" required> -->
                     </div>
+                    </ng-container>
 
                     <div class="mb-3" >
                         <label for="student" class="form-label">Apprenant</label>
@@ -107,6 +114,99 @@
             <div class="modal-footer">
                 <button type="submit" class="btn save" data-bs-dismiss="modal"
                     (click)=" ajoutNotesValider()">Ajout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Modification Note -->
+<div class="modal fade" id="modification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 fw-bold titre">Modifier une note</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulaire d'enregistrement -->
+                <form>
+                    <div class="mb-3">
+                        <label for="classe" class="form-label">classe</label><br>
+                        <select class="form-select" name="classe" aria-label="Default select example"
+                            [(ngModel)]="classe">
+                            <option selected>{{formateurConnect.classeF}}</option>
+                        </select>
+                        <!-- <input type="text" id="semester" name="semester" class="form-control" [(ngModel)]="evaluationFormModel.semester" required> -->
+                    </div>
+
+                    <ng-container>
+                        <div class="mb-3">
+                            <label for="semester" class="form-label">Semester</label>
+                            <select class="form-select" aria-label="Default select example" name="semester"
+                                [(ngModel)]="semester">
+                                <option selected>Choisisez un Semestre</option>
+                                <ng-container *ngFor=" let semestre of formateurConnect.evaluation">
+                                    <option value="{{semestre.semester}}">Semestre {{semestre.semester}} </option>
+                                </ng-container>
+                            </select>
+                            <!-- <input type="text" id="semester" name="semester" class="form-control" [(ngModel)]="evaluationFormModel.semester" required> -->
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Année Scolaire</label>
+                            <select class="form-select" aria-label="Default select example" name="date"
+                                [(ngModel)]="date">
+                                <option selected>Année Scolaire</option>
+                                <ng-container *ngFor=" let semestre of formateurConnect.evaluation">
+                                    <option value="{{semestre.date | date:'YYYY'}}"> {{semestre.date| date:'YYYY'}}
+                                    </option>
+                                </ng-container>
+                            </select>
+                            <!-- <input type="text" id="semester" name="date" class="form-control" [(ngModel)]="date" value="{{semestre.date}}"> -->
+                            <!-- <input type="date" id="date" name="date" class="form-control" [(ngModel)]="date"> -->
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Evaluation</label>
+                            <select class="form-select" aria-label="Default select example" name="type"
+                                [(ngModel)]="type">
+                                <option selected>Choisisez une evaluation</option>
+                                <ng-container *ngFor=" let semestre of formateurConnect.evaluation">
+                                    <ng-container *ngIf="semestre.status == 'faite'">
+                                        <option value="{{semestre.type}} {{semestre.subject}}">{{semestre.type}}
+                                            {{semestre.subject}}</option>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+                            <!-- <input type="text" id="type" name="type" class="form-control" [(ngModel)]="evaluationFormModel.type" required> -->
+                        </div>
+                    </ng-container>
+
+                    <div class="mb-3">
+                        <label for="student" class="form-label">Apprenant</label>
+                        <select class="form-select" aria-label="Default select example" name="student"
+                            [(ngModel)]="student">
+                            <option selected>listes des apprenants</option>
+                            <ng-container *ngFor="let eleve of tabApprenants">
+                                <option *ngIf="eleve.niveau==formateurConnect.classeF"
+                                    value="{{eleve.prenomApprenant}}">{{eleve.prenomApprenant}} {{eleve.nomApprenant}}
+                                </option>
+                            </ng-container>
+                        </select>
+                        <!-- <input type="text" id="status" name="status" class="form-control" [(ngModel)]="evaluationFormModel.status" required> -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="note" class="form-label">Notes</label>
+                        <input type="text" id="note" name="note" class="form-control" [(ngModel)]="note">
+                        <!-- <input type="text" id="subject" name="subject" class="form-control" [(ngModel)]="evaluationFormModel.subject" required> -->
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn save" data-bs-dismiss="modal"
+                    (click)=" modierNote()">Modifier</button>
             </div>
         </div>
     </div>

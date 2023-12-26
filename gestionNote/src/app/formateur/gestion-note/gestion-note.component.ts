@@ -94,6 +94,7 @@ export class GestionNoteComponent {
         apprenants: this.student,
         evaluation: this.subject,
         Classe: this.classe,
+        etat: 1,
       }
       this.tabNotes.push(note);
       this.tabNoteFormateur.push(note);
@@ -111,6 +112,32 @@ export class GestionNoteComponent {
       localStorage.setItem("formateurs", JSON.stringify(this.tabFormateur));
       console.log(this.tabFormateur);
     }
+  }
+
+  // variable qui stock l'evaluation selectionner
+  currentNote: any;
+  // Methode pour charger les infos de l'evaluation à modifier
+  chargerInfosNote(paramNote: any) {
+    this.currentNote = paramNote;
+    this.type = paramNote.type;
+    this.semester = paramNote.semester;
+    this.classe = paramNote.Classe;
+    this.date = paramNote.date;
+    this.subject = paramNote.subject;
+    this.note = paramNote.notes;
+    this.student = paramNote.apprenants;
+  }
+
+  modierNote() {
+    this.currentNote.type = this.type;
+    this.currentNote.semester = this.semester;
+    this.currentNote.Classe = this.classe;
+    this.currentNote.date = this.date;
+    this.currentNote.subject = this.subject;
+    this.currentNote.notes = this.note;
+    this.currentNote.apprenants = this.student;
+    localStorage.setItem("formateurs", JSON.stringify(this.tabFormateur));
+    localStorage.setItem("Notes", JSON.stringify(this.tabNotes));
 
   }
 }

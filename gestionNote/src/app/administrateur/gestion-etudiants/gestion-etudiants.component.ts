@@ -101,7 +101,7 @@ export class GestionEtudiantsComponent {
       }
       this.tabApprenants.push(apprenant);
       localStorage.setItem("Apprenants", JSON.stringify(this.tabApprenants));
-      this.sweet('success', 'Felicitation!', 'Ajout Classe reuissie');
+      this.sweet('success', 'Felicitation!', 'Ajout Apprenant reuissie');
       this.name = '';
       this.prenom = '';
       this.email = '';

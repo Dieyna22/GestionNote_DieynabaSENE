@@ -88,6 +88,7 @@ export class GestionEvaluationComponent implements OnInit {
         status: this.status,
         subject: this.subject,
         Classe: this.classe,
+        etat:1,
       }
       this.tabEvaluation.push(evaluation);
       this.tabEvaluationFormateur.push(evaluation);
@@ -105,5 +106,52 @@ export class GestionEvaluationComponent implements OnInit {
         console.log(this.tabFormateur);
     }
 
+  }
+  deleteEvaluation(index: number) {
+    // alert('test delete')
+    if (this.tabEvaluationFormateur[index].status === 'faite') {
+      // Ne supprimez pas une évaluation faite
+      this.sweet("warning", "Attention!", "Impossible de supprimer une évaluation déjà faite.");
+    } else {
+      Swal.fire({
+        title: "Etes-vous sur???",
+        text: "voulez-vous Supprimer",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD99BB",
+        cancelButtonColor: "#F2D4CC",
+        confirmButtonText: "Oui !"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.tabEvaluationFormateur[index].etat = 0;
+          localStorage.setItem("formateurs", JSON.stringify(this.tabFormateur));
+          this.sweet("success", "Suppresion", "Evaluation Supprimer")
+        }
+      });
+      
+    }
+  }
+
+  // variable qui stock l'evaluation selectionner
+  currentEvaluation: any;
+  // Methode pour charger les infos de l'evaluation à modifier
+  chargerInfosEvaluation(paramEvaluation: any) {
+    this.currentEvaluation = paramEvaluation;
+    this.type = paramEvaluation.type;
+    this.semester = paramEvaluation.semester;
+    this.classe = paramEvaluation.Classe;
+    this.status = paramEvaluation.status;
+    this.date = paramEvaluation.date;
+    this.subject = paramEvaluation.subject;
+  }
+
+  modierEvaluation() {
+    this.currentEvaluation.type = this.type;
+    this.currentEvaluation.semester = this.semester;
+    this.currentEvaluation.Classe = this.classe;
+    this.currentEvaluation.status = this.status;
+    this.currentEvaluation.date = this.date;
+    this.currentEvaluation.subject = this.subject;
+    localStorage.setItem("formateurs", JSON.stringify(this.tabFormateur));
   }
 }

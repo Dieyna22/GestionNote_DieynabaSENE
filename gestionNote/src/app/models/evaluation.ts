@@ -6,6 +6,7 @@ export class Evaluations {
   status: string = '';
   subject: string = '';
   Classe: string = ''; 
+  etat: number = 0;
 }
 
 export interface Evaluation {
